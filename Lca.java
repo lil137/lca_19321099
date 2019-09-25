@@ -1,5 +1,6 @@
 package main_pack;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +26,11 @@ import java.util.List;
 		public boolean CheckExistence(int val, TreeNode BTree) {
 			boolean leftResult = false;
 			boolean rightResult = false;
+			
+			//if(BTree == null) {
+			//	return false;
+			//}
+			
 			if (BTree.value == val) {
 				return true;
 			}else {
@@ -51,10 +57,6 @@ import java.util.List;
 		
 	    TreeNode root;
 		
-		//public int[] Record_Path(int Searched_val, BinaryTree Btree) {
-		//	
-		//	return path;
-		//}
 		
 		public List<Integer> path1 = new ArrayList<>(); 
 	    public List<Integer> path2 = new ArrayList<>(); 
@@ -123,30 +125,18 @@ import java.util.List;
 		        
 		        int final_lca = locate_lca(path1_arr, path2_arr);
 		        
+		        path1.clear();
+			    path2.clear();
+			
 		        return final_lca;
 		        
-		        
-		        /**
-		         * System.out.println("The path for n1 is :");
-		        
-		         * for (int i = 0; i < path1_arr.length ; i++) {
-		         
-		        	System.out.print(path1_arr[i]);
-		        	System.out.print(' ');
-		        }
-		        System.out.println();
-		        
-		        System.out.println("The path for n2 is :");
-		        for (int i = 0; i < path2_arr.length ; i++) {
-		        	System.out.print(path2_arr[i]);
-		        	System.out.print(' ');
-		        }
-		        System.out.println();
-		        */
 				
 			}else {
 				System.out.println("Some or both two nodes are not on the tree");
 				
+				path1.clear();
+			    path2.clear();
+			
 				return -1; /////
 			}
 		}
@@ -176,6 +166,18 @@ public class Lca {
 			System.out.println("The LCA for the node "+ node1 + " and " + node2 + " is " + lca_val);
 		}
 
+		
+		findLca find1 = new findLca();
+		//find1.root = null;
+		//int Searched_val3 = 6;
+		//boolean EmptyResult = find1.root.CheckExistence(Searched_val3,find1.root);
+		//System.out.println(EmptyResult);
+		
+		Integer[] test_arr1 = {1};
+		Integer[] test_arr2 = {1,3};
+		
+		int test1 = find1.locate_lca(test_arr1,test_arr2);
+		System.out.println(test1);
 	}
 
 }
