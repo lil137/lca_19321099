@@ -31,6 +31,15 @@ public class LcaTest {
 		
 		int Searched_val2 = 3;
 		assertEquals(true,find.root.CheckExistence(Searched_val2,find.root));
+		
+		/**
+		 * findLca find1 = new findLca();
+		 
+		find1.root = null;
+		int Searched_val3 = 6;
+		assertEquals(false,find1.root.CheckExistence(Searched_val3,find1.root));
+		 */
+		
 	}
 	
 	@Test
@@ -85,7 +94,79 @@ public class LcaTest {
 	
 	
 	}
+	
+	@Test
+	public void Testlocate_lca() {
+		Integer[] arr1 = {1,2,3,4,5};
+		Integer[] arr2 = {1,6,8};
+		findLca find_lca = new findLca();
+		int real_lca = find_lca.locate_lca(arr1,arr2);
+		int expected_lca = 1;
+		assertEquals(expected_lca,real_lca);
+		
+		
+		Integer[] arr3 = {1};
+		Integer[] arr4 = {1,6,8};
+		findLca find_lca1 = new findLca();
+		int real_lca1 = find_lca1.locate_lca(arr3,arr4);
+		int expected_lca1 = 1;
+		assertEquals(expected_lca1,real_lca1);
+		
+		Integer[] arr5 = {1,2,3};
+		Integer[] arr6 = {1,2,4};
+		findLca find_lca2 = new findLca();
+		int real_lca2 = find_lca2.locate_lca(arr5,arr6);
+		int expected_lca2 = 2;
+		assertEquals(expected_lca2,real_lca2);
+		
+	}
 
+	@Test
+	public void TestLca_solution() {
+		findLca find1 = new findLca();
+		find1.root = new TreeNode(1);
+		find1.root.left = new TreeNode(3);
+		find1.root.right =new TreeNode(5);
+		find1.root.left.left = new TreeNode(4);
+		find1.root.left.right = new TreeNode(8);
+		find1.root.right.left = new TreeNode(6);
+		find1.root.right.right = new TreeNode(12);
+		
+		/**
+		 *          1
+		 *          
+		 *        /   \
+ 		 *       3     5
+		 *      / \   / \ 
+		 *     4   8 6   12
+		 * 
+		 * 
+		 * 
+		 */
+		
+		int node1 = 4;
+		int node2 = 8;
+		int lca1= find1.Lca_solution(find1.root,node1,node2);
+		assertEquals(3,lca1);
+		
+		int node3 = 3;
+		int node4 = 1;
+		int lca2= find1.Lca_solution(find1.root,node3,node4);
+		assertEquals(1,lca2);
+		
+		
+		int node5 = 8;
+		int node6 = 5;
+		int lca3= find1.Lca_solution(find1.root,node5,node6);
+		assertEquals(1,lca3);
+		
+		
+		int node7 = 100;
+		int node8 = 3;
+		int lca4= find1.Lca_solution(find1.root,node7,node8);
+		assertEquals(-1,lca4);
+		
+	}
 	
 
 }
