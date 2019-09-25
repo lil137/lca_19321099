@@ -9,8 +9,6 @@ import java.util.List;
 *   3.https://www.geeksforgeeks.org/lowest-common-ancestor-binary-tree-set-1/
 *   4.https://www.breakyizhan.com/java/4052.html
 */
-
-
 	class TreeNode {
 		
 		public int value; 
@@ -92,13 +90,30 @@ import java.util.List;
 	        return false; 
 	    }
 		
+		public int locate_lca(Integer[] arr1, Integer[] arr2) {
+			int len_1 = arr1.length;
+			int len_2 = arr2.length;
+			int shorter_arr_length = Math.min(len_1,len_2);
+			int lca_index = 0;
+			
+			for (int i = 0; i < shorter_arr_length; i++) {
+				if(arr1[i] == arr2[i]) {
+					lca_index = i;
+				}else {
+					break;
+				}
+				
+			}
+			return arr1[lca_index];		
+			
+		}
+			
+		
 		
 		public int Lca_solution(TreeNode Btree, int n1, int n2) {
 			if (Btree.CheckExistence(n1,Btree) && Btree.CheckExistence(n2, Btree)) {
 				findPath(Btree,n1,path1);
 				findPath(Btree,n2,path2);
-				//Integer[] path1_arr=path1.toArray();
-				//path1_arr = path1.toArray();
 				
 				Integer[] path1_arr = new Integer[path1.size()];
 		        path1_arr = path1.toArray(path1_arr);
@@ -106,9 +121,16 @@ import java.util.List;
 		        Integer[] path2_arr = new Integer[path2.size()];
 		        path2_arr = path2.toArray(path2_arr);
 		        
+		        int final_lca = locate_lca(path1_arr, path2_arr);
 		        
-		        System.out.println("The path for n1 is :");
-		        for (int i = 0; i < path1_arr.length ; i++) {
+		        return final_lca;
+		        
+		        
+		        /**
+		         * System.out.println("The path for n1 is :");
+		        
+		         * for (int i = 0; i < path1_arr.length ; i++) {
+		         
 		        	System.out.print(path1_arr[i]);
 		        	System.out.print(' ');
 		        }
@@ -120,13 +142,12 @@ import java.util.List;
 		        	System.out.print(' ');
 		        }
 		        System.out.println();
-		        
-		        return 1; /////
+		        */
 				
 			}else {
 				System.out.println("Some or both two nodes are not on the tree");
 				
-				return 2; /////
+				return -1; /////
 			}
 		}
 		
@@ -146,7 +167,14 @@ public class Lca {
 		find.root.left.right = new TreeNode(5);
 		//int Searched_val = 5;
 		
-		find.Lca_solution(find.root, 1, 4);
+		int node1=  4;
+		int node2 = 7;
+		
+		int lca_val = find.Lca_solution(find.root, node1, node2);
+		
+		if(lca_val != -1) {
+			System.out.println("The LCA for the node "+ node1 + " and " + node2 + " is " + lca_val);
+		}
 
 	}
 
