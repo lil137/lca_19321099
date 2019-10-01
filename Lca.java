@@ -173,11 +173,6 @@ public class Lca {
 		//boolean EmptyResult = find1.root.CheckExistence(Searched_val3,find1.root);
 		//System.out.println(EmptyResult);
 		
-		Integer[] test_arr1 = {1};
-		Integer[] test_arr2 = {1,3};
-		
-		int test1 = find1.locate_lca(test_arr1,test_arr2);
-		System.out.println(test1);
-	}
+		}
 
 }
