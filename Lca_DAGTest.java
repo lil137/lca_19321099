@@ -9,8 +9,18 @@ import org.junit.Test;
 public class Lca_DAGTest {
 
 	@Test
-	public void test() {
-		Lca_DAG DAG = new Lca_DAG(1);
+	public void TestisEmptyDAG() {
+		Lca_DAG DAG = new Lca_DAG();
+		assertEquals(true,DAG.isEmptyDAG(DAG));
+		DAG.root = new Node(1);
+		assertEquals(false,DAG.isEmptyDAG(DAG));
+	}
+	
+	@Test
+	public void TestCheckExistenceInDAG(){
+			
+		Lca_DAG DAG = new Lca_DAG();
+		DAG.root = new Node(1);
 		DAG.root.successors.add(new Node(2)); 
 		DAG.root.successors.add(new Node(3)); 
 		
@@ -45,6 +55,42 @@ public class Lca_DAGTest {
 		node_5.successors.add(new Node(8));
 		Node node_8 = node_5.successors.get(1);
 		
+		/*
+		 *                          1
+		 *                        /   \
+		 *                       2     3
+		 *                      /       \
+		 *                     4         5 
+		 *                    /         / \
+		 *                   6         7   8 
+		 *                             |
+		 *                         9¡ª¡ª10
+		 *                            / \  
+		 *                          13   11
+		 *                                \
+		 *                                 12
+		 * 
+		 * 
+		 * */
+		
+		//boolean check1 = DAG.CheckExistenceInDAG(DAG.root,6);
+		assertEquals(true,DAG.CheckExistenceInDAG(DAG.root,1));
+		assertEquals(true,DAG.CheckExistenceInDAG(DAG.root,2));
+		assertEquals(true,DAG.CheckExistenceInDAG(DAG.root,3));
+		assertEquals(true,DAG.CheckExistenceInDAG(DAG.root,4));
+		assertEquals(true,DAG.CheckExistenceInDAG(DAG.root,5));
+		assertEquals(true,DAG.CheckExistenceInDAG(DAG.root,6));
+		assertEquals(true,DAG.CheckExistenceInDAG(DAG.root,7));
+		assertEquals(true,DAG.CheckExistenceInDAG(DAG.root,8));
+		assertEquals(true,DAG.CheckExistenceInDAG(DAG.root,9));
+		assertEquals(true,DAG.CheckExistenceInDAG(DAG.root,10));
+		assertEquals(true,DAG.CheckExistenceInDAG(DAG.root,11));
+		assertEquals(true,DAG.CheckExistenceInDAG(DAG.root,12));
+		assertEquals(true,DAG.CheckExistenceInDAG(DAG.root,13));
+		
+		
+		assertEquals(false,DAG.CheckExistenceInDAG(DAG.root,0));
+		assertEquals(false,DAG.CheckExistenceInDAG(DAG.root,100));
 		
 		
 	
@@ -52,9 +98,9 @@ public class Lca_DAGTest {
 		
 		
 		
-		for (Node s : DAG.root.successors){
+		/*for (Node s : DAG.root.successors){
 			System.out.println(s.value);
-		}
+		}*/
 	}
 
 }

@@ -2,9 +2,10 @@ package main_pack;
 
 import java.util.*;
 
-/*Codes are adopted from: 1.https://stackoverflow.com/questions/15460661/different-ways-to-implement-dags-in-java
-							2.https://www.jianshu.com/p/d4b54510c8ec
-							3.http://www.runoob.com/java/java-collections.html
+/*Codes and ideas are adapted from:
+	1.https://stackoverflow.com/questions/15460661/different-ways-to-implement-dags-in-java
+	2.https://www.jianshu.com/p/d4b54510c8ec
+	3.http://www.runoob.com/java/java-collections.html
 */
 
 
@@ -29,7 +30,7 @@ class Node{
 
 public class Lca_DAG{
 		
-		Node root = new Node(); // assuming only one root exists	
+		Node root;// = new Node(); // assuming only one root exists	
 		
 		public Lca_DAG() {
 		}
@@ -45,27 +46,61 @@ public class Lca_DAG{
 			root.successors = succ;
 		}
 	
+		public boolean isEmptyDAG(Lca_DAG DAG) {
+			if (DAG.root == null){
+				System.out.println("The DAG is empty");
+				return true;
+			}else {
+				return false;
+			}
+		}
+				
+		
+		public boolean CheckExistenceInDAG(Node n, int val) {
+		    if (n.value == val) {
+		    	return true;
+		    }else if(n.successors == null){
+		    	return false;
+		    }else {
+		    	boolean result = false;
+		    	for (Node ns : n.successors) {
+		    		result = result || CheckExistenceInDAG(ns,val);
+		    	}
+		    	return result;
+		    }			
+		
+		}
+		
 		public static void main(String[] args) {
-			Lca_DAG DAG = new Lca_DAG(1);
+			Lca_DAG DAG = new Lca_DAG();
+			DAG.isEmptyDAG(DAG);
+			DAG.root = new Node(1);
+			//DAG.root.value = 1;
+			//DAG.root.successors = new ArrayList<Node>();
 			DAG.root.successors.add(new Node(2)); 
 			DAG.root.successors.add(new Node(3)); 
 			DAG.root.successors.add(new Node(4)); 
 			DAG.root.successors.add(new Node(5)); 
-			for (Node s : DAG.root.successors){
+			
+			//boolean check1 = DAG.CheckExistenceInDAG(DAG.root,6);
+			//System.out.println(check1);
+			/*for (Node s : DAG.root.successors){
 				System.out.println(s.value);
-			}
+			}*/
 		}
+		
+		
 		
 		
 		
 }
 
 
-class PathMap {
+/*class PathMap {
 	  HashMap<Lca_DAG, List<Lca_DAG> > pathMap;
 
 	  public List<Lca_DAG> getPathFromRoot(Lca_DAG n) {
 	     List<Lca_DAG> pathFromRoot = pathMap.get(n);
 	     return pathFromRoot;
 	  }
-}
+}*/
