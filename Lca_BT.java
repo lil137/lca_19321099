@@ -4,7 +4,7 @@ package main_pack;
 import java.util.ArrayList;
 import java.util.List;
 
-/** The codes are adapted from:
+/** The codes and ideas are adapted from:
 *   1.https://blog.csdn.net/qq_38737992/article/details/90240422
 *   2.https://blog.csdn.net/weixin_41933796/article/details/79826940
 *   3.https://www.geeksforgeeks.org/lowest-common-ancestor-binary-tree-set-1/
@@ -115,6 +115,9 @@ import java.util.List;
 		
 		
 		public int Lca_solution(TreeNode Btree, int n1, int n2) {
+			if( n1 == n2) {
+				return n1;
+			}
 			
 			if (Btree.CheckExistence(n1,Btree) && Btree.CheckExistence(n2, Btree)) {
 				findPath(Btree,n1,path1);

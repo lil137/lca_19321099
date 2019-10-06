@@ -65,10 +65,45 @@ public class Lca_DAG{
 		    	boolean result = false;
 		    	for (Node ns : n.successors) {
 		    		result = result || CheckExistenceInDAG(ns,val);
+		    		if(result == true) {
+		    			break;
+		    		}
 		    	}
 		    	return result;
 		    }			
 		
+		}
+		
+		//private ArrayList<Integer> Node1PathDemo = new ArrayList<Integer>();
+		//private ArrayList<Integer> Node2PathDemo = new ArrayList<Integer>();
+		
+		
+		private Object[] Paths_Node1 = { new ArrayList<Integer>()};
+		private Object[] Paths_Node2 = { new ArrayList<Integer>()};
+		ArrayList<Integer> Path = new ArrayList<Integer>();
+		
+		// check the existence first then use the below method to find the path
+		// so we don't have to check the existence in this function
+		public boolean findPathInDAG(Node node, int val,ArrayList<Integer> Path) {
+			if (node == null) {
+				return false;
+			}else {
+				Path.add(node.value);
+				
+				if (node.value == val) {
+					return true;
+				}
+				for (int i = 0; i < node.successors.size(); i++) {
+					if(node.successors.size() != 0 &&
+			           findPathInDAG(node.successors.get(i),val,Path)) {
+						return true;
+					}
+				}	
+				
+				Path.remove(Path.size()-1);
+				
+				return false;
+				}
 		}
 		
 		public static void main(String[] args) {

@@ -172,6 +172,11 @@ public class Lca_BTTest {
 		int lca4= find1.Lca_solution(find1.root,node7,node8);
 		assertEquals(-1,lca4); // should print "Some or both two nodes are not on the tree"
 		
+		int node9 = 4;
+		int node10 = 4;
+		int lca5 = find1.Lca_solution(find1.root,node9,node10);
+		assertEquals(4,lca5);
+		
 	}
 	
 
