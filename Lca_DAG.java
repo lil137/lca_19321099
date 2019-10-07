@@ -11,6 +11,7 @@ import java.util.*;
 
 class Node{
 	List<Node> successors;
+	boolean isMarked;
 	int value; 
 
 	public Node() {
@@ -19,12 +20,30 @@ class Node{
 	
 	public Node(int val) {
 		value = val;
+		isMarked = false;
 		successors = new ArrayList<Node>();
 	}
 
 	public Node(int val,List<Node> succ) {
 		value = val;
+		isMarked = false;
 		successors = succ;
+	}
+	
+	public void MarkNode (int val,Node root) {
+        if(root == null) {
+        	return;
+        }
+        
+        
+		if (root.value == val) {
+	    	root.isMarked = true;
+	    }else {
+	    	for (Node ns : root.successors) {
+	    		root.MarkNode(val,ns);
+	    	}
+	    	
+	    }		
 	}
 }
 
@@ -37,12 +56,14 @@ public class Lca_DAG{
 		
 		public Lca_DAG(int val) {
 			root.value = val;
+			root.isMarked = false;
 			root.successors = new ArrayList<Node>();
 		}
 
 		
 		public Lca_DAG(int val,List<Node> succ) {
 			root.value = val;
+			root.isMarked = false;
 			root.successors = succ;
 		}
 	
@@ -78,8 +99,8 @@ public class Lca_DAG{
 		//private ArrayList<Integer> Node2PathDemo = new ArrayList<Integer>();
 		
 		
-		private Object[] Paths_Node1 = { new ArrayList<Integer>()};
-		private Object[] Paths_Node2 = { new ArrayList<Integer>()};
+		public Object[] Paths_Node1 = { new ArrayList<Integer>()};
+		public Object[] Paths_Node2 = { new ArrayList<Integer>()};
 		ArrayList<Integer> Path = new ArrayList<Integer>();
 		
 		// check the existence first then use the below method to find the path
@@ -87,7 +108,7 @@ public class Lca_DAG{
 		public boolean findPathInDAG(Node node, int val,ArrayList<Integer> Path) {
 			if (node == null) {
 				return false;
-			}else {
+			}else if(node.isMarked != true){
 				Path.add(node.value);
 				
 				if (node.value == val) {
@@ -98,13 +119,25 @@ public class Lca_DAG{
 			           findPathInDAG(node.successors.get(i),val,Path)) {
 						return true;
 					}
-				}	
-				
+				}			
 				Path.remove(Path.size()-1);
-				
 				return false;
-				}
+			}else {
+				return false;
+			}
 		}
+		
+		public int findLcaInDAG(int val1, int val2, Lca_DAG DAG){
+			if (DAG.CheckExistenceInDAG(DAG.root, val1) && DAG.CheckExistenceInDAG(DAG.root, val2)) {
+				while(DAG.findPathInDAG(DAG.root, val1, Path)) {
+					if(Paths_Node1[Paths_Node1.length-1] != null) {
+						
+					}
+				}
+			}
+		}		
+		
+	
 		
 		public static void main(String[] args) {
 			Lca_DAG DAG = new Lca_DAG();
@@ -130,12 +163,3 @@ public class Lca_DAG{
 		
 }
 
-
-/*class PathMap {
-	  HashMap<Lca_DAG, List<Lca_DAG> > pathMap;
-
-	  public List<Lca_DAG> getPathFromRoot(Lca_DAG n) {
-	     List<Lca_DAG> pathFromRoot = pathMap.get(n);
-	     return pathFromRoot;
-	  }
-}*/

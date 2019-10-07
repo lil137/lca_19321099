@@ -99,6 +99,8 @@ public class Lca_DAGTest {
 	public void TestfindPathInDAG(){
 		Lca_DAG DAG = new Lca_DAG();
 		DAG.root = new Node(1);
+		//Node node_1 = new Node(1);
+		//DAG.root = node_1;
 		DAG.root.successors.add(new Node(2)); 
 		DAG.root.successors.add(new Node(3)); 
 		
@@ -115,6 +117,7 @@ public class Lca_DAGTest {
 		node_5.successors.add(new Node(7));
 		Node node_7 = node_5.successors.get(0);
 		node_2.successors.add(node_7);
+		node_6.successors.add(node_7);
 		
 		node_7.successors.add(new Node(10));
 		Node node_10 = node_7.successors.get(0);
@@ -142,7 +145,11 @@ public class Lca_DAGTest {
 		 *                     4   \      5 
 		 *                    /     \    / \
 		 *                   6       \  /   8
-		 *                   		   7   
+		 *                    \       \/   
+		 *                   	\	   |
+		 *                   	  \	   |	
+		 *                   		\  |
+		 *                    		  7   
 		 *                             |
 		 *                         9¡ª¡ª10
 		 *                            / \  
@@ -153,16 +160,33 @@ public class Lca_DAGTest {
 		 * 
 		 * */
 		 //ArrayList<Integer> Path = new ArrayList<Integer>();
-		 boolean test1 =DAG.findPathInDAG(DAG.root,12,DAG.Path);
+
+		 System.out.println(node_6.isMarked);
+		 
+	
+
+		 boolean test1 =DAG.findPathInDAG(DAG.root,7,DAG.Path);
 		 if(test1) {
 			 for ( Integer integer : DAG.Path) {
 				 System.out.println(integer);
 			 }
+			 DAG.Paths_Node1[0] = DAG.Path;
+			 if(DAG.Path.size() == 1) {
+				 DAG.root.isMarked = true;
+				 DAG.Path.clear();
+			 }else {
+				 int MarkNodeVal = DAG.Path.get(DAG.Path.size()-2);
+			     DAG.root.MarkNode(MarkNodeVal, DAG.root);
+				 DAG.Path.clear();
+
+			 }		
 		 }else {
 			 System.out.println("Val not in");
 		 }
 		 
-		
+		 System.out.println(node_6.isMarked);
+		 
+		 
 	}
 
 }
