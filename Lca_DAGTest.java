@@ -95,6 +95,7 @@ public class Lca_DAGTest {
 		assertEquals(false,DAG.CheckExistenceInDAG(DAG.root,100));
 	}
 	
+	
 	@Test
 	public void TestfindPathInDAG(){
 		Lca_DAG DAG = new Lca_DAG();
@@ -165,12 +166,12 @@ public class Lca_DAGTest {
 		 
 	
 
-		 boolean test1 =DAG.findPathInDAG(DAG.root,7,DAG.Path);
+		 /*boolean test1 =DAG.findPathInDAG(DAG.root,7,DAG.Path);
 		 if(test1) {
 			 for ( Integer integer : DAG.Path) {
 				 System.out.println(integer);
 			 }
-			 DAG.Paths_Node1[0] = DAG.Path;
+			 DAG.Paths_Node1.add(DAG.Path);
 			 if(DAG.Path.size() == 1) {
 				 DAG.root.isMarked = true;
 				 DAG.Path.clear();
@@ -182,9 +183,32 @@ public class Lca_DAGTest {
 			 }		
 		 }else {
 			 System.out.println("Val not in");
-		 }
+		 }*/
 		 
 		 System.out.println(node_6.isMarked);
+		 
+		 DAG.findLcaInDAG(4, 7, DAG);
+		 System.out.println(DAG.Paths_Node1.size());
+		 System.out.println(DAG.Paths_Node2.size());
+		 for (int i = 0; i< DAG.Paths_Node1.size();i++) {
+			 ArrayList<Integer> temp = DAG.Paths_Node1.get(i);
+			 for (int j = 0; j < temp.size();j++) {
+				 System.out.print(temp.get(j)+ " ");
+			 }
+			 System.out.println();
+			 
+		 }
+		 
+		 System.out.println("----------");
+		 
+		 for (int i = 0; i< DAG.Paths_Node2.size();i++) {
+			 ArrayList<Integer> temp = DAG.Paths_Node2.get(i);
+			 for (int j = 0; j < temp.size();j++) {
+				 System.out.print(temp.get(j)+ " ");
+			 }
+			 System.out.println();
+			 
+		 }
 		 
 		 
 	}

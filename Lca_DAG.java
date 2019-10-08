@@ -45,6 +45,22 @@ class Node{
 	    	
 	    }		
 	}
+	
+	public void ClearMark(int val,Node root) {
+		if(root == null) {
+        	return;
+        }
+        
+        
+		if (root.value == val) {
+	    	root.isMarked = false;
+	    }else {
+	    	for (Node ns : root.successors) {
+	    		root.ClearMark(val,ns);
+	    	}
+	    	
+	    }
+	}
 }
 
 public class Lca_DAG{
@@ -99,8 +115,8 @@ public class Lca_DAG{
 		//private ArrayList<Integer> Node2PathDemo = new ArrayList<Integer>();
 		
 		
-		public Object[] Paths_Node1 = { new ArrayList<Integer>()};
-		public Object[] Paths_Node2 = { new ArrayList<Integer>()};
+		public List<ArrayList<Integer>> Paths_Node1 = new ArrayList<ArrayList<Integer>>(); // = { new ArrayList<Integer>()};
+		public List<ArrayList<Integer>> Paths_Node2 = new ArrayList<ArrayList<Integer>>();; // = { new ArrayList<Integer>()};
 		ArrayList<Integer> Path = new ArrayList<Integer>();
 		
 		// check the existence first then use the below method to find the path
@@ -127,13 +143,78 @@ public class Lca_DAG{
 			}
 		}
 		
-		public int findLcaInDAG(int val1, int val2, Lca_DAG DAG){
-			if (DAG.CheckExistenceInDAG(DAG.root, val1) && DAG.CheckExistenceInDAG(DAG.root, val2)) {
-				while(DAG.findPathInDAG(DAG.root, val1, Path)) {
-					if(Paths_Node1[Paths_Node1.length-1] != null) {
-						
+		
+		
+		//@SuppressWarnings("unchecked")
+		/*public void InsertPath(Object[] Paths_node, ArrayList<Integer> Path) {
+			if(Paths_node[Paths_node.length-1] != null) {
+			    ArrayList<Integer>[] New_Path_Node = (ArrayList<Integer>[])new Object[Paths_node.length*2];
+				for(int i =0 ; i < Paths_node.length;i++) {
+					New_Path_Node[i] = (ArrayList<Integer>)Paths_node[i];
+				}
+				Paths_node = New_Path_Node;
+			}else {
+				for(int i = 0; i < Paths_node.length;i++) {
+					if(Paths_node[i] == null) {
+						Paths_node[i] = Path;
+						break;
 					}
 				}
+			}
+			
+		}*/
+		
+		public int findLcaInDAG(int val1, int val2, Lca_DAG DAG){
+			if (DAG.CheckExistenceInDAG(DAG.root, val1) && DAG.CheckExistenceInDAG(DAG.root, val2)) {
+				boolean val1_find = DAG.findPathInDAG(DAG.root, val1, DAG.Path);
+				while(val1_find) {
+					for(int i = 0; i < DAG.Path.size();i++) {
+						System.out.print(DAG.Path.get(i) + " ");
+					}
+					System.out.println();
+						
+					DAG.Paths_Node1.add(DAG.Path);
+					if(DAG.Path.size() == 1) {
+						 DAG.root.isMarked = true;
+						 DAG.Path.clear();
+					 }else {
+						 int MarkNodeVal = DAG.Path.get(DAG.Path.size()-2);
+					     DAG.root.MarkNode(MarkNodeVal, DAG.root);
+						 DAG.Path.clear();
+					}
+					val1_find = DAG.findPathInDAG(DAG.root, val1, DAG.Path);
+				}
+				
+				boolean val2_find = DAG.findPathInDAG(DAG.root, val2, DAG.Path);
+				while(val2_find) {
+					DAG.Paths_Node2.add(DAG.Path);
+					
+					System.out.println("test here");
+					for (int j = 0; j < DAG.Path.size();j++) {
+						 System.out.print(DAG.Path.get(j)+ " ");
+					 }
+					 System.out.println();
+					 
+					 
+					if(DAG.Path.size() == 1) {
+						 DAG.root.isMarked = true;
+						 DAG.Path.clear();
+						 //DAG.root.ClearMark(root);
+					 }else {
+						 int MarkNodeVal = DAG.Path.get(DAG.Path.size()-2);
+					     DAG.root.MarkNode(MarkNodeVal, DAG.root);
+						 DAG.Path.clear();
+						 //DAG.root.ClearMark(root);
+					}
+					val2_find = DAG.findPathInDAG(DAG.root, val2, DAG.Path);
+				}
+				
+				return 0;
+				
+				
+			}else {
+				System.out.println("Some or both nodes are not in the DAG");
+				return -1; // default value
 			}
 		}		
 		
