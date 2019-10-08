@@ -162,7 +162,7 @@ public class Lca_DAGTest {
 		 * */
 		 //ArrayList<Integer> Path = new ArrayList<Integer>();
 
-		 System.out.println(node_6.isMarked);
+		 System.out.println(node_2.isMarked);
 		 
 	
 
@@ -185,9 +185,11 @@ public class Lca_DAGTest {
 			 System.out.println("Val not in");
 		 }*/
 		 
-		 System.out.println(node_6.isMarked);
+		
 		 
-		 DAG.findLcaInDAG(4, 7, DAG);
+		 DAG.AddPathForEachNode(2, 3);
+		 System.out.println(node_2.isMarked);
+		 
 		 System.out.println(DAG.Paths_Node1.size());
 		 System.out.println(DAG.Paths_Node2.size());
 		 for (int i = 0; i< DAG.Paths_Node1.size();i++) {
@@ -207,8 +209,18 @@ public class Lca_DAGTest {
 				 System.out.print(temp.get(j)+ " ");
 			 }
 			 System.out.println();
-			 
+			
 		 }
+		 
+		 System.out.println("123----------");
+		 DAG.findPossibleLca();
+		 
+		 Node n1 = DAG.locateNodeViaValue(7,DAG.root);
+		 System.out.println(n1.value);
+		 
+		 boolean isParentTest =DAG.isParent(2,3);
+		 System.out.println(isParentTest);
+		 
 		 
 		 
 	}
