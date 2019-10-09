@@ -83,8 +83,8 @@ public class Lca_DAG{
 			root.successors = succ;
 		}
 	
-		public boolean isEmptyDAG(Lca_DAG DAG) {
-			if (DAG.root == null){
+		public boolean isEmptyDAG() {
+			if (root == null){
 				System.out.println("The DAG is empty");
 				return true;
 			}else {
@@ -205,35 +205,42 @@ public class Lca_DAG{
 					
 					Possible_Lca.add(node1.get(lca_index));			
 			}			
-			for (Integer i : Possible_Lca) {
+			/*for (Integer i : Possible_Lca) {
 				System.out.println("Possible lca" +  i + " ");
 			}
 			System.out.println("-----");
-			
+			*/
 			}
 			return Possible_Lca;
 		}
 		
 		public Node locateNodeViaValue(int val,Node root) {
 			Node temp = new Node();
-			if(root.value == val) {
+			if(root == null) {
+				return null;
+			}else if(root.value == val) {
 				return root;
 			}else if(root.successors != null){ 
 					for (Node n : root.successors) {
-						temp = locateNodeViaValue(val, n);
-						if(temp != null) {
-							return temp;
+						if(n.value == val) {
+							temp = n;
+						}else {
+							temp = locateNodeViaValue(val,n);	
 						}
-					}	
-			}else {
-				return new Node();
+						
+						if(temp != null) {
+							break;
+						}
+					}
+						
+			}else{
+				return null;
 			}
 			
 			return temp;
-
 		}
 		
-		// cant pass in the situation 2,3
+		// 
 		public boolean isParent (int val1, int val2) {
 			Node node1 = locateNodeViaValue(val1,root);
 			Node node2 = locateNodeViaValue(val2,root);;
@@ -256,17 +263,24 @@ public class Lca_DAG{
 		
 		
 		
-		/*
+		
 		public int findfinalLca(ArrayList<Integer> Possible_Lcas) {
-			int temp = (int)Possible_Lcas.get(0);
-			if(Possible_Lcas.size() == 1) {
-				return temp;
+			if (Possible_Lcas.size() == 1) {
+				return (int)Possible_Lcas.get(0);
 			}else {
-				for(int i = 0 ;i < Possible_Lcas.size()-1; i++) {
-					if()
+				int i = 0;
+				while(Possible_Lcas.size() != 1 && i < Possible_Lcas.size()-1){
+					if(isParent(Possible_Lcas.get(i),Possible_Lcas.get(i+1))) {
+						Possible_Lcas.remove(i);
+						;
+					}else {
+						Possible_Lcas.remove(i+1);
+						i++;
+					}
 				}
 			}
-		}*/
+			return Possible_Lcas.get(0);
+		}
 	
 		
 		public static void main(String[] args) {
