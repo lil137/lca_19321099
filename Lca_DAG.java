@@ -24,12 +24,6 @@ class Node{
 		successors = new ArrayList<Node>();
 	}
 
-	public Node(int val,List<Node> succ) {
-		value = val;
-		isMarked = false;
-		successors = succ;
-	}
-	
 	public void MarkNode (int val,Node root) {
         if(root == null) {
         	return;
@@ -70,7 +64,7 @@ public class Lca_DAG{
 		public Lca_DAG() {
 		}
 		
-		public Lca_DAG(int val) {
+		/*public Lca_DAG(int val) {
 			root.value = val;
 			root.isMarked = false;
 			root.successors = new ArrayList<Node>();
@@ -81,7 +75,7 @@ public class Lca_DAG{
 			root.value = val;
 			root.isMarked = false;
 			root.successors = succ;
-		}
+		}*/
 	
 		public boolean isEmptyDAG() {
 			if (root == null){
@@ -96,12 +90,12 @@ public class Lca_DAG{
 		public boolean CheckExistenceInDAG(Node n, int val) {
 		    if (n.value == val) {
 		    	return true;
-		    }else if(n.successors == null){
+		    }else if(n.successors.size() == 0){
 		    	return false;
 		    }else {
 		    	boolean result = false;
 		    	for (Node ns : n.successors) {
-		    		result = result || CheckExistenceInDAG(ns,val);
+		    		result = CheckExistenceInDAG(ns,val) || result;
 		    		if(result == true) {
 		    			break;
 		    		}
@@ -220,22 +214,21 @@ public class Lca_DAG{
 				return null;
 			}else if(root.value == val) {
 				return root;
-			}else if(root.successors != null){ 
-					for (Node n : root.successors) {
-						if(n.value == val) {
-							temp = n;
-						}else {
-							temp = locateNodeViaValue(val,n);	
-						}
-						
-						if(temp != null) {
-							break;
-						}
-					}
-						
-			}else{
+			}else if(root.successors.size() != 0){ 
+				//System.out.println("node " + root.value + " size " + root.successors.size());
+					for (int i = 0 ;i <root.successors.size();i++) {
+						//System.out.println(i + " " + root.successors.get(i).value);
+							temp = locateNodeViaValue(val,root.successors.get(i));
+							if(temp != null) {
+								break;
+							}else {
+								continue;
+							}
+					}				
+			}else {
 				return null;
-			}
+			}			
+	
 			
 			return temp;
 		}
@@ -266,6 +259,8 @@ public class Lca_DAG{
 		
 		public int findfinalLca(ArrayList<Integer> Possible_Lcas) {
 			if (Possible_Lcas.size() == 1) {
+				Paths_Node1.clear();
+				Paths_Node2.clear();
 				return (int)Possible_Lcas.get(0);
 			}else {
 				int i = 0;
@@ -279,16 +274,21 @@ public class Lca_DAG{
 					}
 				}
 			}
+			Paths_Node1.clear();
+			Paths_Node2.clear();
 			return Possible_Lcas.get(0);
 		}
 	
 		
-		public static void main(String[] args) {
-			
+		public int LcaInDAG(int val1, int val2) {
+			if(AddPathForEachNode(val1, val2)) {
+				ArrayList<Integer> Plca = findPossibleLca();
+				int lca = findfinalLca(Plca);
+				return lca;
+			}else {
+				return -1; // means there are something wrong ;
+			}
 		}
-		
-		
-		
 		
 		
 }
