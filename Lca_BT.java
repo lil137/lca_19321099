@@ -76,7 +76,7 @@ import java.util.List;
 	        path.add(root.value); 
 	  
 	        if (root.value == n) { 
-	            return true; 
+	            return true;
 	        } 
 	  
 	        if (root.left != null && findPath(root.left, n, path)) { 
@@ -145,37 +145,6 @@ import java.util.List;
 			
 				return -1; /////
 			}
-		}
-		
-	
-	
-
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		//findLca find = new findLca();
-		//find.root = new TreeNode(1);
-		//find.root.left = new TreeNode(2);
-		//find.root.right = new TreeNode(3);
-		//find.root.left.left = new TreeNode(4);
-		//find.root.left.right = new TreeNode(5);
-		//int Searched_val = 5;
-		
-		//int node1=  4;
-		//int node2 = 7;
-		
-		//int lca_val = find.Lca_solution(find.root, node1, node2);
-		
-		//if(lca_val != -1) {
-		//	System.out.println("The LCA for the node "+ node1 + " and " + node2 + " is " + lca_val);
-		//}
-
-		
-		//findLca find1 = new findLca();
-		//find1.root = null;
-		//int Searched_val3 = 6;
-		//boolean EmptyResult = find1.root.CheckExistence(Searched_val3,find1.root);
-		//System.out.println("123"+ EmptyResult);
-		
 		}
 
 }
